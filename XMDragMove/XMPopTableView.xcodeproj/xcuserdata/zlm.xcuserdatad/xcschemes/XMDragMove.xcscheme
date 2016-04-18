@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "485A3AF21CC08CE900431987"
-               BuildableName = "XMDragMove.app"
-               BlueprintName = "XMDragMove"
-               ReferencedContainer = "container:XMDragMove.xcodeproj">
+               BuildableName = "XMPopTableView.app"
+               BlueprintName = "XMPopTableView"
+               ReferencedContainer = "container:XMPopTableView.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "485A3AF21CC08CE900431987"
-            BuildableName = "XMDragMove.app"
-            BlueprintName = "XMDragMove"
-            ReferencedContainer = "container:XMDragMove.xcodeproj">
+            BuildableName = "XMPopTableView.app"
+            BlueprintName = "XMPopTableView"
+            ReferencedContainer = "container:XMPopTableView.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "485A3AF21CC08CE900431987"
-            BuildableName = "XMDragMove.app"
-            BlueprintName = "XMDragMove"
-            ReferencedContainer = "container:XMDragMove.xcodeproj">
+            BuildableName = "XMPopTableView.app"
+            BlueprintName = "XMPopTableView"
+            ReferencedContainer = "container:XMPopTableView.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "485A3AF21CC08CE900431987"
-            BuildableName = "XMDragMove.app"
-            BlueprintName = "XMDragMove"
-            ReferencedContainer = "container:XMDragMove.xcodeproj">
+            BuildableName = "XMPopTableView.app"
+            BlueprintName = "XMPopTableView"
+            ReferencedContainer = "container:XMPopTableView.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

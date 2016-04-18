@@ -13,13 +13,13 @@
 		485A3B011CC08CE900431987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485A3AFF1CC08CE900431987 /* Main.storyboard */; };
 		485A3B031CC08CE900431987 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 485A3B021CC08CE900431987 /* Assets.xcassets */; };
 		485A3B061CC08CE900431987 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485A3B041CC08CE900431987 /* LaunchScreen.storyboard */; };
-		485A3B101CC08D5400431987 /* UIScrollView+XMDragToMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 485A3B0F1CC08D5400431987 /* UIScrollView+XMDragToMove.m */; };
+		485A3B101CC08D5400431987 /* UIScrollView+XMPopTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 485A3B0F1CC08D5400431987 /* UIScrollView+XMPopTableView.m */; };
 		485A3B141CC091B000431987 /* XMTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 485A3B121CC091B000431987 /* XMTableView.m */; };
 		485A3B151CC091B000431987 /* XMTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485A3B131CC091B000431987 /* XMTableView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		485A3AF31CC08CE900431987 /* XMDragMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMDragMove.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		485A3AF31CC08CE900431987 /* XMPopTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMPopTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		485A3AF71CC08CE900431987 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		485A3AF91CC08CE900431987 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		485A3AFA1CC08CE900431987 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -29,8 +29,8 @@
 		485A3B021CC08CE900431987 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		485A3B051CC08CE900431987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		485A3B071CC08CE900431987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		485A3B0E1CC08D5400431987 /* UIScrollView+XMDragToMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+XMDragToMove.h"; sourceTree = "<group>"; };
-		485A3B0F1CC08D5400431987 /* UIScrollView+XMDragToMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+XMDragToMove.m"; sourceTree = "<group>"; };
+		485A3B0E1CC08D5400431987 /* UIScrollView+XMPopTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+XMPopTableView.h"; sourceTree = "<group>"; };
+		485A3B0F1CC08D5400431987 /* UIScrollView+XMPopTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+XMPopTableView.m"; sourceTree = "<group>"; };
 		485A3B111CC091B000431987 /* XMTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTableView.h; sourceTree = "<group>"; };
 		485A3B121CC091B000431987 /* XMTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMTableView.m; sourceTree = "<group>"; };
 		485A3B131CC091B000431987 /* XMTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XMTableView.xib; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		485A3AEA1CC08CE900431987 = {
 			isa = PBXGroup;
 			children = (
-				485A3AF51CC08CE900431987 /* XMDragMove */,
+				485A3AF51CC08CE900431987 /* XMPopTableView */,
 				485A3AF41CC08CE900431987 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,12 +58,12 @@
 		485A3AF41CC08CE900431987 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				485A3AF31CC08CE900431987 /* XMDragMove.app */,
+				485A3AF31CC08CE900431987 /* XMPopTableView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		485A3AF51CC08CE900431987 /* XMDragMove */ = {
+		485A3AF51CC08CE900431987 /* XMPopTableView */ = {
 			isa = PBXGroup;
 			children = (
 				485A3AF91CC08CE900431987 /* AppDelegate.h */,
@@ -73,13 +73,14 @@
 				485A3B111CC091B000431987 /* XMTableView.h */,
 				485A3B121CC091B000431987 /* XMTableView.m */,
 				485A3B131CC091B000431987 /* XMTableView.xib */,
-				485A3B0D1CC08D2700431987 /* XMDragMove */,
+				485A3B0D1CC08D2700431987 /* XMPopTableView */,
 				485A3AFF1CC08CE900431987 /* Main.storyboard */,
 				485A3B021CC08CE900431987 /* Assets.xcassets */,
 				485A3B041CC08CE900431987 /* LaunchScreen.storyboard */,
 				485A3B071CC08CE900431987 /* Info.plist */,
 				485A3AF61CC08CE900431987 /* Supporting Files */,
 			);
+			name = XMPopTableView;
 			path = XMDragMove;
 			sourceTree = "<group>";
 		};
@@ -91,21 +92,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		485A3B0D1CC08D2700431987 /* XMDragMove */ = {
+		485A3B0D1CC08D2700431987 /* XMPopTableView */ = {
 			isa = PBXGroup;
 			children = (
-				485A3B0E1CC08D5400431987 /* UIScrollView+XMDragToMove.h */,
-				485A3B0F1CC08D5400431987 /* UIScrollView+XMDragToMove.m */,
+				485A3B0E1CC08D5400431987 /* UIScrollView+XMPopTableView.h */,
+				485A3B0F1CC08D5400431987 /* UIScrollView+XMPopTableView.m */,
 			);
-			name = XMDragMove;
+			name = XMPopTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		485A3AF21CC08CE900431987 /* XMDragMove */ = {
+		485A3AF21CC08CE900431987 /* XMPopTableView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 485A3B0A1CC08CE900431987 /* Build configuration list for PBXNativeTarget "XMDragMove" */;
+			buildConfigurationList = 485A3B0A1CC08CE900431987 /* Build configuration list for PBXNativeTarget "XMPopTableView" */;
 			buildPhases = (
 				485A3AEF1CC08CE900431987 /* Sources */,
 				485A3AF01CC08CE900431987 /* Frameworks */,
@@ -115,9 +116,9 @@
 			);
 			dependencies = (
 			);
-			name = XMDragMove;
+			name = XMPopTableView;
 			productName = XMDragMove;
-			productReference = 485A3AF31CC08CE900431987 /* XMDragMove.app */;
+			productReference = 485A3AF31CC08CE900431987 /* XMPopTableView.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -134,7 +135,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 485A3AEE1CC08CE900431987 /* Build configuration list for PBXProject "XMDragMove" */;
+			buildConfigurationList = 485A3AEE1CC08CE900431987 /* Build configuration list for PBXProject "XMPopTableView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -147,7 +148,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				485A3AF21CC08CE900431987 /* XMDragMove */,
+				485A3AF21CC08CE900431987 /* XMPopTableView */,
 			);
 		};
 /* End PBXProject section */
@@ -173,7 +174,7 @@
 			files = (
 				485A3AFE1CC08CE900431987 /* ViewController.m in Sources */,
 				485A3AFB1CC08CE900431987 /* AppDelegate.m in Sources */,
-				485A3B101CC08D5400431987 /* UIScrollView+XMDragToMove.m in Sources */,
+				485A3B101CC08D5400431987 /* UIScrollView+XMPopTableView.m in Sources */,
 				485A3AF81CC08CE900431987 /* main.m in Sources */,
 				485A3B141CC091B000431987 /* XMTableView.m in Sources */,
 			);
@@ -289,8 +290,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XMDragMove/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = XM.XMDragMove;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = XM.XMPopTableView;
+				PRODUCT_NAME = XMPopTableView;
 			};
 			name = Debug;
 		};
@@ -300,15 +301,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XMDragMove/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = XM.XMDragMove;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = XM.XMPopTableView;
+				PRODUCT_NAME = XMPopTableView;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		485A3AEE1CC08CE900431987 /* Build configuration list for PBXProject "XMDragMove" */ = {
+		485A3AEE1CC08CE900431987 /* Build configuration list for PBXProject "XMPopTableView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				485A3B081CC08CE900431987 /* Debug */,
@@ -317,13 +318,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		485A3B0A1CC08CE900431987 /* Build configuration list for PBXNativeTarget "XMDragMove" */ = {
+		485A3B0A1CC08CE900431987 /* Build configuration list for PBXNativeTarget "XMPopTableView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				485A3B0B1CC08CE900431987 /* Debug */,
 				485A3B0C1CC08CE900431987 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

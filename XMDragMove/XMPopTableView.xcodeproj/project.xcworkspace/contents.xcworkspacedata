@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:XMDragMove.xcodeproj">
+      location = "self:/Users/zlm/XMPOPTableview/XMPopTableView/XMDragMove/XMPopTableView.xcodeproj">
    </FileRef>
 </Workspace>

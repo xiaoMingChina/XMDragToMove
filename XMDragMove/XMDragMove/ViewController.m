@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "XMTableView.h"
-#import "UIScrollView+XMDragToMove.h"
+#import "UIScrollView+XMPopTableView.h"
 
 @interface ViewController ()<XMDragToMoveDelegate>
 

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 zlm. All rights reserved.
 //
 
-#import "UIScrollView+XMDragToMove.h"
+#import "UIScrollView+XMPopTableView.h"
 #import <objc/runtime.h>
 
 @interface XMObject ()
@@ -19,13 +19,13 @@
 @property (nonatomic, assign ) CGFloat oldOffsetY;
 @property (nonatomic, assign ) BOOL    dragToDown;
 @property (nonatomic, assign ) BOOL    isObserving;
-@property (nonatomic, assign) id<XMDragToMoveDelegate> xmDelegate;
+@property (nonatomic, assign ) id<XMDragToMoveDelegate> xmDelegate;
 
 @end
 
 static char UIScrollViewDragToDown;
 
-@implementation UIScrollView (XMDragToMove)
+@implementation UIScrollView (XMPopTableView)
 
 @dynamic dragToDown,closeFrame,openFrame,closeRate,xmDelegate,height;
 

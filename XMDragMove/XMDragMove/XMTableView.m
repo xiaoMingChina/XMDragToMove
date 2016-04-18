@@ -7,7 +7,6 @@
 //
 
 #import "XMTableView.h"
-#import "UIScrollView+XMDragToMove.h"
 
 @implementation XMTableView
 - (void)awakeFromNib {

@@ -21,7 +21,7 @@
 @end
 
 
-@interface UIScrollView (XMDragToMove)
+@interface UIScrollView (XMPopTableView)
 
 @property (nonatomic, strong, readonly) XMObject *xmObject;
 @property (nonatomic, assign) BOOL dragToDown;
