@@ -11,7 +11,7 @@
 
 @interface XMObject ()
 
-@property (nonatomic, assign ) BOOL    frameIsChanged;
+@property (nonatomic, strong ) UIButton  *btnHideTableView;
 @property (nonatomic, assign ) CGRect  openFrame;
 @property (nonatomic, assign ) CGRect  closeFrame;
 @property (nonatomic, assign ) CGFloat closeRate;
@@ -19,6 +19,8 @@
 @property (nonatomic, assign ) CGFloat oldOffsetY;
 @property (nonatomic, assign ) BOOL    dragToDown;
 @property (nonatomic, assign ) BOOL    isObserving;
+@property (nonatomic, assign ) BOOL    frameIsChanged;
+@property (nonatomic, assign ) BOOL    isShowing;
 @property (nonatomic, assign ) id<XMDragToMoveDelegate> xmDelegate;
 
 @end
@@ -36,6 +38,7 @@ static char UIScrollViewDragToDown;
         object.realoffsetY = 0;
         object.oldOffsetY = 0;
         object.dragToDown = YES;
+        object.isShowing = NO;
         self.xmObject = object;
         if (!self.xmObject.isObserving) {
             [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context:nil];
@@ -177,7 +180,13 @@ static char UIScrollViewDragToDown;
     if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(popXMTableView)]) {
         [self.xmObject.xmDelegate popXMTableView];
     }
+    if (!self.xmObject.isShowing) {
+        [self.xmObject.btnHideTableView addTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
+        [self.superview insertSubview:self.xmObject.btnHideTableView belowSubview:self];
+        self.xmObject.isShowing = YES;
+    }
 }
+
 -(void)hideTableView
 {
     [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -190,6 +199,12 @@ static char UIScrollViewDragToDown;
     
     if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(hideXMTableView)]) {
         [self.xmObject.xmDelegate hideXMTableView];
+    }
+    
+    if (self.xmObject.isShowing) {
+        [self.xmObject.btnHideTableView removeTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
+        [self.xmObject.btnHideTableView removeFromSuperview];
+        self.xmObject.isShowing = NO;
     }
 }
 
@@ -283,5 +298,16 @@ static char UIScrollViewDragToDown;
 @end
 
 @implementation XMObject
+
+- (UIButton *)btnHideTableView
+{
+    if (!_btnHideTableView) {
+        _btnHideTableView = [[UIButton alloc] init];
+        _btnHideTableView.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.100];
+        _btnHideTableView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        [_btnHideTableView setExclusiveTouch:YES];
+    }
+    return _btnHideTableView;
+}
 
 @end
