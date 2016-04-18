@@ -15,7 +15,6 @@
 @property (nonatomic, assign ) CGRect  openFrame;
 @property (nonatomic, assign ) CGRect  closeFrame;
 @property (nonatomic, assign ) CGFloat closeRate;
-@property (nonatomic, assign ) CGFloat height;
 @property (nonatomic, assign ) CGFloat realoffsetY;
 @property (nonatomic, assign ) CGFloat oldOffsetY;
 @property (nonatomic, assign ) BOOL    dragToDown;
@@ -28,7 +27,7 @@ static char UIScrollViewDragToDown;
 
 @implementation UIScrollView (XMDragToMove)
 
-@dynamic dragToDown,closeFrame,openFrame,closeRate,xmDelegate;
+@dynamic dragToDown,closeFrame,openFrame,closeRate,xmDelegate,height;
 
 - (void)setDragToDown:(BOOL)dragToDown
 {
@@ -50,6 +49,9 @@ static char UIScrollViewDragToDown;
             self.xmObject.isObserving = NO;
         }
     }
+    self.openFrame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 220, [UIScreen mainScreen].bounds.size.width, 220);
+    self.closeFrame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 220);
+    [self setFrame:self.closeFrame];
 }
 
 - (BOOL)dragToDown
@@ -87,7 +89,6 @@ static char UIScrollViewDragToDown;
 
 - (void)scrollViewDidScrollWithKVO:(CGPoint)contentOffset
 {
-    
     CGFloat offsetY = contentOffset.y;
     self.xmObject.frameIsChanged = self.xmObject.realoffsetY < 0 ? YES:NO;
     
@@ -96,7 +97,7 @@ static char UIScrollViewDragToDown;
             [self.xmObject.xmDelegate frameIsChanged];
         }
         if (offsetY > 0) {
-#if DEBUG
+#ifdef DEBUG
 //            NSLog(@"----upDrag----frameIsChanged");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollUP)]) {
@@ -108,7 +109,7 @@ static char UIScrollViewDragToDown;
                 return;
             }
         } else if (offsetY < 0){
-#if DEBUG
+#ifdef DEBUG
 //            NSLog(@"====downDrag====frameIsChanged");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollDown)]) {
@@ -124,7 +125,7 @@ static char UIScrollViewDragToDown;
         }
     } else {
         if (offsetY > self.xmObject.oldOffsetY) {
-#if DEBUG
+#ifdef DEBUG
 //            NSLog(@"----upDrag----");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollUP)]) {
@@ -132,7 +133,7 @@ static char UIScrollViewDragToDown;
             }
             self.xmObject.oldOffsetY = offsetY;
         } else if (offsetY < self.xmObject.oldOffsetY){
-#if DEBUG
+#ifdef DEBUG
 //            NSLog(@"====downDrag====");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollDown)]) {
@@ -157,14 +158,14 @@ static char UIScrollViewDragToDown;
 
 - (void)checkShow
 {
-    if (self.xmObject.realoffsetY < -self.xmObject.height * self.xmObject.closeRate) {
-        [self closeMenu];
+    if (self.xmObject.realoffsetY < - CGRectGetHeight(self.frame) * self.xmObject.closeRate) {
+        [self hideTableView];
     } else {
-        [self openMenu];
+        [self popTableView];
     }
 }
 
--(void)openMenu
+-(void)popTableView
 {
     [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.frame = self.xmObject.openFrame;
@@ -172,8 +173,12 @@ static char UIScrollViewDragToDown;
         self.xmObject.realoffsetY = 0;
         self.xmObject.oldOffsetY = 0;
     }];
+    
+    if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(popXMTableView)]) {
+        [self.xmObject.xmDelegate popXMTableView];
+    }
 }
--(void)closeMenu
+-(void)hideTableView
 {
     [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
         CGRect rect = self.xmObject.closeFrame;
@@ -183,11 +188,10 @@ static char UIScrollViewDragToDown;
         self.xmObject.oldOffsetY = 0;
     }];
     
-    if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(closeMenu)]) {
-        [self.xmObject.xmDelegate closeMenu];
+    if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(hideXMTableView)]) {
+        [self.xmObject.xmDelegate hideXMTableView];
     }
 }
-
 
 #pragma mark - Setters -
 - (void)setXmObject:(XMObject *)xmObject
@@ -207,7 +211,6 @@ static char UIScrollViewDragToDown;
 - (void)setOpenFrame:(CGRect)openFrame
 {
     self.xmObject.openFrame = openFrame;
-    self.xmObject.height = CGRectGetHeight(openFrame);
 }
 
 - (void)setCloseRate:(CGFloat)closeRate
@@ -218,6 +221,12 @@ static char UIScrollViewDragToDown;
 - (void)setXmDelegate:(id<XMDragToMoveDelegate>)xmDelegate
 {
     self.xmObject.xmDelegate = xmDelegate;
+}
+
+- (void)setHeight:(CGFloat)height
+{
+    self.openFrame  = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - height, [UIScreen mainScreen].bounds.size.width, height);
+    self.closeFrame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, height);
 }
 
 #pragma mark - Getters -
@@ -243,6 +252,11 @@ static char UIScrollViewDragToDown;
         self.xmObject.closeRate = 0.1;
     }
     return self.xmObject.closeRate;
+}
+
+- (CGFloat)height
+{
+    return CGRectGetHeight(self.frame);
 }
 
 #pragma mark - Remove Observer -

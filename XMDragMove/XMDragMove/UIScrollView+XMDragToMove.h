@@ -12,7 +12,8 @@
 
 @protocol XMDragToMoveDelegate <NSObject>
 
-- (void)closeMenu;
+- (void)popXMTableView;
+- (void)hideXMTableView;
 - (void)scrollUP;
 - (void)scrollDown;
 - (void)frameIsChanged;
@@ -27,7 +28,11 @@
 @property (nonatomic, assign) CGRect openFrame;
 @property (nonatomic, assign) CGRect closeFrame;
 @property (nonatomic, assign) CGFloat closeRate;   //if offset greater it when scroll stop moving, will close menu. default is 0.1
+@property (nonatomic, assign) CGFloat height;
 @property (nonatomic, assign) id<XMDragToMoveDelegate> xmDelegate;
+
+- (void)popTableView;
+- (void)hideTableView;
 
 @end
 
