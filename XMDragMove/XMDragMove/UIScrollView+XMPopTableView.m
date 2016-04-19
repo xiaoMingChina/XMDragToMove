@@ -21,6 +21,7 @@
 @property (nonatomic, assign ) BOOL    isObserving;
 @property (nonatomic, assign ) BOOL    frameIsChanged;
 @property (nonatomic, assign ) BOOL    isShowing;
+@property (nonatomic, assign ) XMPopTableViewState state;
 @property (nonatomic, assign ) id<XMDragToMoveDelegate> xmDelegate;
 
 @end
@@ -29,7 +30,7 @@ static char UIScrollViewDragToDown;
 
 @implementation UIScrollView (XMPopTableView)
 
-@dynamic dragToDown,closeFrame,openFrame,closeRate,xmDelegate,height;
+@dynamic dragToDown, closeFrame, openFrame, closeRate, xmDelegate, height, state;
 
 - (void)setDragToDown:(BOOL)dragToDown
 {
@@ -82,7 +83,7 @@ static char UIScrollViewDragToDown;
             case UIGestureRecognizerStateChanged:
                 break;
             case UIGestureRecognizerStateEnded:
-                [self checkShow];
+                self.state = XMPopTableViewStateChecking;
                 break;
             default:
                 break;
@@ -100,25 +101,28 @@ static char UIScrollViewDragToDown;
             [self.xmObject.xmDelegate frameIsChanged];
         }
         if (offsetY > 0) {
-#ifdef DEBUG
+#if DEBUG
 //            NSLog(@"----upDrag----frameIsChanged");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollUP)]) {
                 [self.xmObject.xmDelegate scrollUP];
             }
-            self.xmObject.realoffsetY = self.xmObject.realoffsetY + offsetY;
+            self.xmObject.realoffsetY += offsetY;
             if (self.xmObject.realoffsetY > 0) {
                 self.xmObject.realoffsetY = 0;
                 return;
             }
         } else if (offsetY < 0){
-#ifdef DEBUG
+#if DEBUG
 //            NSLog(@"====downDrag====frameIsChanged");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollDown)]) {
                 [self.xmObject.xmDelegate scrollDown];
             }
             self.xmObject.realoffsetY += offsetY;
+            if ([self isDecelerating] ) {
+                self.xmObject.realoffsetY = offsetY;//离开拖拽进入当前状态时offsetY是瞬间量,不能再用累加的方式计算,否则数值会变得很大
+            }
         }
         if (![self isDecelerating]) {
             CGRect old_rect = self.frame;
@@ -128,7 +132,7 @@ static char UIScrollViewDragToDown;
         }
     } else {
         if (offsetY > self.xmObject.oldOffsetY) {
-#ifdef DEBUG
+#if DEBUG
 //            NSLog(@"----upDrag----");
 #endif
             if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(scrollUP)]) {
@@ -152,8 +156,15 @@ static char UIScrollViewDragToDown;
             }
         }
     }
-    if ([self isDecelerating]) {
-        [self checkShow];
+    
+    if (self.state != XMPopTableViewStateChecking) {
+        if (!self.isDragging && self.state == XMPopTableViewStateTriggered) {
+            self.state = XMPopTableViewStateChecking;
+        } else if (self.xmObject.realoffsetY < - CGRectGetHeight(self.frame) * self.closeRate && self.isDragging && self.state == XMPopTableViewStateStopped) {
+            self.state =XMPopTableViewStateTriggered;
+        } else if (self.xmObject.realoffsetY >= - CGRectGetHeight(self.frame) * self.closeRate && self.state != XMPopTableViewStateStopped) {
+            self.state = XMPopTableViewStateStopped;
+        }
     }
 }
 
@@ -175,37 +186,36 @@ static char UIScrollViewDragToDown;
     } completion:^(BOOL finished) {
         self.xmObject.realoffsetY = 0;
         self.xmObject.oldOffsetY = 0;
+        if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(popXMTableView)]) {
+            [self.xmObject.xmDelegate popXMTableView];
+        }
+        if (!self.xmObject.isShowing) {
+            [self.xmObject.btnHideTableView addTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
+            [self.superview insertSubview:self.xmObject.btnHideTableView belowSubview:self];
+            self.xmObject.isShowing = YES;
+        }
+        self.state = XMPopTableViewStateStopped;
     }];
-    
-    if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(popXMTableView)]) {
-        [self.xmObject.xmDelegate popXMTableView];
-    }
-    if (!self.xmObject.isShowing) {
-        [self.xmObject.btnHideTableView addTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
-        [self.superview insertSubview:self.xmObject.btnHideTableView belowSubview:self];
-        self.xmObject.isShowing = YES;
-    }
 }
 
 -(void)hideTableView
 {
     [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-        CGRect rect = self.xmObject.closeFrame;
-        self.frame = rect;
+        self.frame = self.xmObject.closeFrame;
     } completion:^(BOOL finished) {
         self.xmObject.realoffsetY = 0;
         self.xmObject.oldOffsetY = 0;
+        if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(hideXMTableView)]) {
+            [self.xmObject.xmDelegate hideXMTableView];
+        }
+        
+        if (self.xmObject.isShowing) {
+            [self.xmObject.btnHideTableView removeTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
+            [self.xmObject.btnHideTableView removeFromSuperview];
+            self.xmObject.isShowing = NO;
+        }
+        self.state = XMPopTableViewStateStopped;
     }];
-    
-    if (self.xmObject.xmDelegate && [self.xmObject.xmDelegate respondsToSelector:@selector(hideXMTableView)]) {
-        [self.xmObject.xmDelegate hideXMTableView];
-    }
-    
-    if (self.xmObject.isShowing) {
-        [self.xmObject.btnHideTableView removeTarget:self action:@selector(hideTableView) forControlEvents:UIControlEventTouchUpInside];
-        [self.xmObject.btnHideTableView removeFromSuperview];
-        self.xmObject.isShowing = NO;
-    }
 }
 
 #pragma mark - Setters -
@@ -244,6 +254,28 @@ static char UIScrollViewDragToDown;
     self.closeFrame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, height);
 }
 
+- (void)setState:(XMPopTableViewState)state
+{
+    if (self.state == state) {
+        return;
+    }
+    self.xmObject.state = state;
+    switch (state) {
+        case XMPopTableViewStateStopped: {
+            
+        }
+            break;
+        case XMPopTableViewStateTriggered: {
+            
+        }
+            break;
+        case XMPopTableViewStateChecking: {
+            [self checkShow];
+        }
+            break;
+    }
+}
+
 #pragma mark - Getters -
 
 - (XMObject *)xmObject
@@ -272,6 +304,11 @@ static char UIScrollViewDragToDown;
 - (CGFloat)height
 {
     return CGRectGetHeight(self.frame);
+}
+
+- (XMPopTableViewState)state
+{
+    return self.xmObject.state;
 }
 
 #pragma mark - Remove Observer -

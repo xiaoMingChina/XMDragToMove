@@ -20,6 +20,11 @@
 
 @end
 
+typedef NS_ENUM(NSUInteger, XMPopTableViewState) {
+    XMPopTableViewStateStopped,
+    XMPopTableViewStateTriggered,
+    XMPopTableViewStateChecking,
+};
 
 @interface UIScrollView (XMPopTableView)
 
@@ -27,8 +32,9 @@
 @property (nonatomic, assign) BOOL dragToDown;
 @property (nonatomic, assign) CGRect openFrame;
 @property (nonatomic, assign) CGRect closeFrame;
-@property (nonatomic, assign) CGFloat closeRate;   //if offset greater it when scroll stop moving, will close menu. default is 0.1
+@property (nonatomic, assign) CGFloat closeRate;   //if offset greater it when scroll stop moving, will hide tableview. default is 0.1
 @property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) XMPopTableViewState state;
 @property (nonatomic, assign) id<XMDragToMoveDelegate> xmDelegate;
 
 - (void)popTableView;
